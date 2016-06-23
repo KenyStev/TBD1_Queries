@@ -1,0 +1,112 @@
+-- Generado por Oracle SQL Developer Data Modeler 4.1.3.901
+--   en:        2016-05-05 17:10:15 CST
+--   sitio:      Oracle Database 11g
+--   tipo:      Oracle Database 11g
+
+
+
+
+CREATE TABLE PRIVILEGIOS
+  (
+    ID_PRIVILEGIO NUMBER (8) NOT NULL ,
+    NOMBRE        VARCHAR2 (50)
+  ) ;
+ALTER TABLE PRIVILEGIOS ADD CONSTRAINT PRIVILEGIOS_PK PRIMARY KEY ( ID_PRIVILEGIO ) ;
+
+
+CREATE TABLE ROLES
+  ( ID_ROL NUMBER (8) NOT NULL , NOMBRE VARCHAR2 (50)
+  ) ;
+ALTER TABLE ROLES ADD CONSTRAINT ROLES_PK PRIMARY KEY ( ID_ROL ) ;
+
+
+CREATE TABLE ROL_PRIV
+  (
+    ID_ROL        NUMBER (8) NOT NULL ,
+    ID_PRIVILEGIO NUMBER (8) NOT NULL
+  ) ;
+ALTER TABLE ROL_PRIV ADD CONSTRAINT ROL_PRIV_PK PRIMARY KEY ( ID_ROL, ID_PRIVILEGIO ) ;
+
+
+CREATE TABLE USUARIO
+  (
+    ID_USUARIO         NUMBER (8) NOT NULL ,
+    NOMBRE_NOMBRES     VARCHAR2 (100) ,
+    NOMBRE_APELLIDOS   VARCHAR2 (100) ,
+    CORREO_ELECTRONICO VARCHAR2 (50) ,
+    TELEFONO           NUMBER (8) ,
+    DIRECCION          VARCHAR2 (200)
+  ) ;
+ALTER TABLE USUARIO ADD CONSTRAINT USUARIO_PK PRIMARY KEY ( ID_USUARIO ) ;
+
+
+CREATE TABLE USUARIO_PRIV
+  (
+    ID_USUARIO    NUMBER (8) NOT NULL ,
+    ID_PRIVILEGIO NUMBER (8) NOT NULL
+  ) ;
+ALTER TABLE USUARIO_PRIV ADD CONSTRAINT USUARIO_PRIV_PK PRIMARY KEY ( ID_USUARIO, ID_PRIVILEGIO ) ;
+
+
+CREATE TABLE USUARIO_ROL
+  (
+    ID_USUARIO NUMBER (8) NOT NULL ,
+    ID_ROL     NUMBER (8) NOT NULL
+  ) ;
+ALTER TABLE USUARIO_ROL ADD CONSTRAINT USUARIO_ROL_PK PRIMARY KEY ( ID_USUARIO, ID_ROL ) ;
+
+
+ALTER TABLE ROL_PRIV ADD CONSTRAINT ROL_PRIV_PRIVILEGIOS_FK FOREIGN KEY ( ID_PRIVILEGIO ) REFERENCES PRIVILEGIOS ( ID_PRIVILEGIO ) ;
+
+ALTER TABLE ROL_PRIV ADD CONSTRAINT ROL_PRIV_ROLES_FK FOREIGN KEY ( ID_ROL ) REFERENCES ROLES ( ID_ROL ) ;
+
+ALTER TABLE USUARIO_PRIV ADD CONSTRAINT USUARIO_PRIV_PRIVILEGIOS_FK FOREIGN KEY ( ID_PRIVILEGIO ) REFERENCES PRIVILEGIOS ( ID_PRIVILEGIO ) ;
+
+ALTER TABLE USUARIO_PRIV ADD CONSTRAINT USUARIO_PRIV_USUARIO_FK FOREIGN KEY ( ID_USUARIO ) REFERENCES USUARIO ( ID_USUARIO ) ;
+
+ALTER TABLE USUARIO_ROL ADD CONSTRAINT USUARIO_ROL_ROLES_FK FOREIGN KEY ( ID_ROL ) REFERENCES ROLES ( ID_ROL ) ;
+
+ALTER TABLE USUARIO_ROL ADD CONSTRAINT USUARIO_ROL_USUARIO_FK FOREIGN KEY ( ID_USUARIO ) REFERENCES USUARIO ( ID_USUARIO ) ;
+
+
+-- Informe de Resumen de Oracle SQL Developer Data Modeler: 
+-- 
+-- CREATE TABLE                             6
+-- CREATE INDEX                             0
+-- ALTER TABLE                             12
+-- CREATE VIEW                              0
+-- ALTER VIEW                               0
+-- CREATE PACKAGE                           0
+-- CREATE PACKAGE BODY                      0
+-- CREATE PROCEDURE                         0
+-- CREATE FUNCTION                          0
+-- CREATE TRIGGER                           0
+-- ALTER TRIGGER                            0
+-- CREATE COLLECTION TYPE                   0
+-- CREATE STRUCTURED TYPE                   0
+-- CREATE STRUCTURED TYPE BODY              0
+-- CREATE CLUSTER                           0
+-- CREATE CONTEXT                           0
+-- CREATE DATABASE                          0
+-- CREATE DIMENSION                         0
+-- CREATE DIRECTORY                         0
+-- CREATE DISK GROUP                        0
+-- CREATE ROLE                              0
+-- CREATE ROLLBACK SEGMENT                  0
+-- CREATE SEQUENCE                          0
+-- CREATE MATERIALIZED VIEW                 0
+-- CREATE SYNONYM                           0
+-- CREATE TABLESPACE                        0
+-- CREATE USER                              0
+-- 
+-- DROP TABLESPACE                          0
+-- DROP DATABASE                            0
+-- 
+-- REDACTION POLICY                         0
+-- 
+-- ORDS DROP SCHEMA                         0
+-- ORDS ENABLE SCHEMA                       0
+-- ORDS ENABLE OBJECT                       0
+-- 
+-- ERRORS                                   0
+-- WARNINGS                                 0
